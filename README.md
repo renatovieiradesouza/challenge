@@ -1,6 +1,6 @@
 # Desafio DevOps
 
-Este projeto implementa um desafio de DevOps com duas aplicações em linguagens diferentes (Python e Node.js), uma camada de cache configurada com diferentes tempos de expiração e uma infraestrutura fácil de iniciar.
+Este projeto implementa um desafio de DevOps com duas aplicações em linguagens diferentes (Go e Node.js), uma camada de cache configurada com diferentes tempos de expiração e uma infraestrutura fácil de iniciar.
 
 ## Estrutura do Projeto
 
@@ -42,13 +42,13 @@ Isso iniciará todos os serviços em containers Docker.
 ## Serviços Disponíveis
 
 ### Aplicação 1 (Go)
-- Texto fixo: http://localhost/app1/texto
-- Horário atual: http://localhost/app1/horario
+- Texto fixo: http://localhost:8081/app1/texto
+- Horário atual: http://localhost:8081/app1/horario
 - Cache configurado para 10 segundos
 
 ### Aplicação 2 (Node.js)
-- Texto fixo: http://localhost/app2/texto
-- Horário atual: http://localhost/app2/horario
+- Texto fixo: http://localhost:8081/app2/texto
+- Horário atual: http://localhost:8081/app2/horario
 - Cache configurado para 1 minuto
 
 ## Verificando o Cache
@@ -59,14 +59,14 @@ Para verificar se o cache está funcionando corretamente, observe o cabeçalho `
 
 Exemplo de verificação com curl:
 ```bash
-curl -I http://localhost/app1/texto
+curl -I http://localhost:8081/app1/texto
 ```
 
 ## Comandos Úteis
 
 - Ver logs dos serviços: `docker-compose logs -f`
 - Parar os serviços: `docker-compose down`
-- Reconstruir os serviços: `docker-compose up -d --build`
+- Reconstruir os serviços: `./parar.sh && ./iniciar.sh`
 
 ### Aplicação 1 (Go)
 - Linguagem: Go
