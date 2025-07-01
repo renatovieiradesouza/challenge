@@ -6,7 +6,7 @@ Este projeto implementa um desafio de DevOps com duas aplicações em linguagens
 
 ```
 desafio-devops/
-├── app1-go/           # Aplicação 1 em Python/Flask
+├── app1-go/           # Aplicação 1 em Go
 │   ├── main.go            # Código da aplicação
 │   ├── Dockerfile         # Configuração do container
 ├── app2-nodejs/           # Aplicação 2 em Node.js
