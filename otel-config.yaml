@@ -1,0 +1,18 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+
+exporters:
+  logging:
+    verbosity: normal        
+  jaeger:
+    endpoint: "http://jaeger:4318"
+    tls:
+      insecure: true            # Jaeger rodando sem TLS no ambiente local
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [logging, jaeger]

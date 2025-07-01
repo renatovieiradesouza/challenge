@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  # ---------- aplicações ----------
+  app1:
+    build: ./app1-go
+    container_name: app1-go
+    restart: always
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+    depends_on:
+      - otel-collector
+    networks:
+      - app-network
+
+  app2:
+    build: ./app2-nodejs
+    container_name: app2-nodejs
+    restart: always
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+    depends_on:
+      - otel-collector
+    networks:
+      - app-network
+
+  # ---------- proxy ----------
+  nginx:
+    build: ./nginx
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - app-network
+
+  # ---------- observabilidade ----------
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.102.0
+    container_name: otel-collector
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes:
+      - ./otel-config.yaml:/etc/otel/config.yaml:ro
+    ports:
+      - "4318:4318"   # OTLP/HTTP
+    networks:
+      - app-network
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: jaeger
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686"  # UI
+    networks:
+      - app-network
+
+# ---------- rede compartilhada ----------
+networks:
+  app-network:
+    driver: bridge
