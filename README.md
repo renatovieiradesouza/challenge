@@ -18,6 +18,7 @@ desafio-devops/
 │   └── nginx.conf         # Configuração do Nginx
 ├── docker-compose.yml     # Orquestração dos serviços
 ├── iniciar.sh             # Script para iniciar o projeto
+├── parar.sh               # Parar a aplicação
 └── README.md              # Este arquivo
 ```
 
